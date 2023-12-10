@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Trouvélemo</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        min-height: 100vh;
+        margin: 0;
+        font-size: 20px;
+        padding-bottom: 20px;
+      }
+
+      .formulaire-container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      form {
+        font-size: 2rem;
+        padding: 20px;
+        position: relative;
+      }
+
+      form .inputs {
+        text-align: center;
+      }
+
+      label {
+        margin-bottom: 5px;
+        display: inline-block;
+      }
+
+      .helper {
+        color: #858585;
+        font-size: 1.5rem;
+      }
+
+      input[type="text"] {
+        padding: 8px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 2rem;
+        text-transform: uppercase;
+      }
+
+      .shake {
+        animation: horizontal-shaking 0.35s 2;
+      }
+
+      button[type="submit"],
+      input[type="button"] {
+        cursor: pointer;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+        font-size: 2rem;
+      }
+
+      button[type="submit"]:hover,
+      input[type="button"]:hover {
+        background-color: #0056b3;
+      }
+
+      input[type="text"],
+      button[type="submit"] {
+        width: 100%;
+        box-sizing: border-box;
+        max-width: 500px;
+        text-align: center;
+      }
+
+      .loader {
+        border: 25px solid transparent;
+        border-top-color: rgb(51, 152, 219);
+        border-right-color: rgba(51, 152, 219, 0.25);
+        border-bottom-color: rgb(51, 152, 219);
+        border-left-color: rgba(51, 152, 219, 0.25);
+        border-radius: 50%;
+        width: 140px;
+        height: 140px;
+        animation: spin 1s ease-in-out infinite;
+        display: inline-block;
+      }
+
+      .bottom-container {
+        display: flex;
+        flex-direction: column;
+      }
+
+      #word-list {
+        font-family: monospace;
+        text-transform: uppercase;
+        font-size: 1.25rem;
+        width: 100%;
+        margin: 20px 0;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        flex-grow: 1;
+        gap: 15px;
+        align-self: start;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #word-list li {
+        display: flex;
+        background-color: #fff;
+        padding-left: 10px;
+        border-radius: 4px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      li .letter {
+        margin: 5px 0;
+        padding: 1px;
+        border: 1px solid transparent;
+      }
+
+      li .count {
+        margin-left: 5px;
+        top: 0;
+        right: 0;
+        background: #000;
+        padding: 0 4px;
+        color: #fff;
+        display: flex;
+        align-items: center;
+      }
+
+      .alphabet {
+        padding: 10px;
+        text-align: center;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        justify-content: center;
+      }
+
+      .alphabet input,
+      #reset {
+        font-size: 2rem;
+        font-family: monospace;
+        color: #000;
+        background: #fff;
+        border: 2px solid transparent;
+      }
+
+      .alphabet input:hover,
+      #reset:hover {
+        background: #e3e3e3;
+      }
+
+      #reset {
+        font-size: 1rem;
+        align-self: center;
+        padding: 8px;
+        cursor: pointer;
+        margin-left: 5px;
+      }
+
+      [data-a="1"] [data-letter="a"],
+      [data-b="1"] [data-letter="b"],
+      [data-c="1"] [data-letter="c"],
+      [data-d="1"] [data-letter="d"],
+      [data-e="1"] [data-letter="e"],
+      [data-f="1"] [data-letter="f"],
+      [data-g="1"] [data-letter="g"],
+      [data-h="1"] [data-letter="h"],
+      [data-i="1"] [data-letter="i"],
+      [data-j="1"] [data-letter="j"],
+      [data-k="1"] [data-letter="k"],
+      [data-l="1"] [data-letter="l"],
+      [data-m="1"] [data-letter="m"],
+      [data-n="1"] [data-letter="n"],
+      [data-o="1"] [data-letter="o"],
+      [data-p="1"] [data-letter="p"],
+      [data-q="1"] [data-letter="q"],
+      [data-r="1"] [data-letter="r"],
+      [data-s="1"] [data-letter="s"],
+      [data-t="1"] [data-letter="t"],
+      [data-u="1"] [data-letter="u"],
+      [data-v="1"] [data-letter="v"],
+      [data-w="1"] [data-letter="w"],
+      [data-x="1"] [data-letter="x"],
+      [data-y="1"] [data-letter="y"],
+      [data-z="1"] [data-letter="z"] {
+        border-color: #000;
+        background-color: rgb(194, 255, 194);
+      }
+
+      [data-a="0"] [data-letter="a"],
+      [data-b="0"] [data-letter="b"],
+      [data-c="0"] [data-letter="c"],
+      [data-d="0"] [data-letter="d"],
+      [data-e="0"] [data-letter="e"],
+      [data-f="0"] [data-letter="f"],
+      [data-g="0"] [data-letter="g"],
+      [data-h="0"] [data-letter="h"],
+      [data-i="0"] [data-letter="i"],
+      [data-j="0"] [data-letter="j"],
+      [data-k="0"] [data-letter="k"],
+      [data-l="0"] [data-letter="l"],
+      [data-m="0"] [data-letter="m"],
+      [data-n="0"] [data-letter="n"],
+      [data-o="0"] [data-letter="o"],
+      [data-p="0"] [data-letter="p"],
+      [data-q="0"] [data-letter="q"],
+      [data-r="0"] [data-letter="r"],
+      [data-s="0"] [data-letter="s"],
+      [data-t="0"] [data-letter="t"],
+      [data-u="0"] [data-letter="u"],
+      [data-v="0"] [data-letter="v"],
+      [data-w="0"] [data-letter="w"],
+      [data-x="0"] [data-letter="x"],
+      [data-y="0"] [data-letter="y"],
+      [data-z="0"] [data-letter="z"] {
+        text-decoration: underline;
+        background-color: rgb(255, 188, 188);
+      }
+
+      #loader-container {
+        position: fixed;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.9);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        pointer-events: none;
+      }
+
+      #loader-container.show {
+        pointer-events: all;
+        display: flex;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes horizontal-shaking {
+        0% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(5px);
+        }
+        50% {
+          transform: translateX(-5px);
+        }
+        75% {
+          transform: translateX(5px);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="formulaire-container">
+      <form id="game" action="/submit" method="post">
+        <label for="answer">
+          Trouvez le mot !<br />
+          <span class="helper"
+            >Il s'agit d'un mot de <b id="numberOfLetters">5</b> lettres
+            <u>toutes différentes</u>.</span
+          >
+        </label>
+        <div class="inputs">
+          <input
+            type="text"
+            id="answer"
+            name="answer"
+            required
+            autocomplete="off"
+          />
+          <button type="submit">Soumettre</button>
+        </div>
+      </form>
+    </div>
+
+    <section class="bottom-container">
+      <ol id="word-list" reversed></ol>
+      <div id="alphabet-container" class="alphabet">
+        <input type="button" data-letter="a" value="A" />
+        <input type="button" data-letter="b" value="B" />
+        <input type="button" data-letter="c" value="C" />
+        <input type="button" data-letter="d" value="D" />
+        <input type="button" data-letter="e" value="E" />
+        <input type="button" data-letter="f" value="F" />
+        <input type="button" data-letter="g" value="G" />
+        <input type="button" data-letter="h" value="H" />
+        <input type="button" data-letter="i" value="I" />
+        <input type="button" data-letter="j" value="J" />
+        <input type="button" data-letter="k" value="K" />
+        <input type="button" data-letter="l" value="L" />
+        <input type="button" data-letter="m" value="M" />
+        <input type="button" data-letter="n" value="N" />
+        <input type="button" data-letter="o" value="O" />
+        <input type="button" data-letter="p" value="P" />
+        <input type="button" data-letter="q" value="Q" />
+        <input type="button" data-letter="r" value="R" />
+        <input type="button" data-letter="s" value="S" />
+        <input type="button" data-letter="t" value="T" />
+        <input type="button" data-letter="u" value="U" />
+        <input type="button" data-letter="v" value="V" />
+        <input type="button" data-letter="w" value="W" />
+        <input type="button" data-letter="x" value="X" />
+        <input type="button" data-letter="y" value="Y" />
+        <input type="button" data-letter="z" value="Z" />
+      </div>
+      <button id="reset" type="button">Réinitialiser les lettres</button>
+    </section>
+
+    <div id="loader-container">
+      <div class="loader"></div>
+    </div>
+
+    <script src="./index.js"></script>
+  </body>
+</html>
