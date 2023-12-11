@@ -99,9 +99,6 @@
       }
 
       #word-list {
-        font-family: monospace;
-        text-transform: uppercase;
-        font-size: 1.25rem;
         width: 100%;
         margin: 20px 0;
         padding: 0;
@@ -114,7 +111,10 @@
         align-items: center;
       }
 
-      #word-list li {
+      .word {
+        font-family: monospace;
+        text-transform: uppercase;
+        font-size: 1.25rem;
         display: flex;
         background-color: #fff;
         padding-left: 10px;
@@ -124,13 +124,13 @@
         overflow: hidden;
       }
 
-      li .letter {
+      .word .letter {
         margin: 5px 0;
         padding: 1px;
         border: 1px solid transparent;
       }
 
-      li .count {
+      .word .count {
         margin-left: 5px;
         top: 0;
         right: 0;
@@ -160,6 +160,7 @@
       }
 
       .alphabet input:hover,
+      #explanations .secondary:hover,
       #reset:hover {
         background: #e3e3e3;
       }
@@ -247,7 +248,7 @@
         display: flex;
       }
 
-      #endGame {
+      dialog {
         font-size: 1.5rem;
         line-height: 2.5rem;
         border-radius: 8px;
@@ -256,7 +257,7 @@
         border: 0;
       }
 
-      #endGame::backdrop {
+      dialog::backdrop {
         background-color: rgba(0, 0, 0, 0.5);
       }
 
@@ -274,6 +275,27 @@
       #endGameWord::after {
         content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg==);
         margin: 0 3px 0 5px;
+      }
+
+      #explanations {
+        margin: auto 10px;
+        padding: 20px 30px;
+      }
+
+      #explanations form {
+        text-align: center;
+      }
+
+      #explanations button {
+        width: auto;
+        font-size: 1.2rem;
+      }
+
+      #explanations .secondary {
+        color: #000;
+        background: #fff;
+        border: 2px solid #000;
+        transform: scale(0.9);
       }
 
       @keyframes spin {
@@ -305,6 +327,46 @@
     </style>
   </head>
   <body>
+    <dialog id="explanations">
+      <p>Trouvez le mot !</p>
+      <p>
+        Entrez votre réponse dans le champ : si ce n'est pas le mot-mystère, le
+        jeu indique le nombre de lettres en commun entre votre réponse et le mot
+        à trouver.
+      </p>
+      <p>
+        Par exemple, si le mot-mystère est <strong>AMOUR</strong> et que vous
+        tentez le mot <strong>MARIN</strong>, le jeu indiquera qu'il y a 3
+        lettres en commun (M, A et R) <ins>sans vous dire lesquelles</ins> :
+
+        <span class="word" style="display: inline-flex">
+          <span class="letter" data-letter="m">m</span
+          ><span class="letter" data-letter="a">a</span
+          ><span class="letter" data-letter="r">r</span
+          ><span class="letter" data-letter="i">i</span
+          ><span class="letter" data-letter="n">n</span
+          ><span class="count">3 </span>
+        </span>
+      </p>
+
+      <p>
+        Faites preuve de déduction avec cette seule info pour trouver le
+        mot-mystère !
+      </p>
+      <form method="dialog">
+        <button type="submit" class="secondary" value="4">
+          Facile (4 lettres)
+        </button>
+        <button type="submit" value="5">Normal (5 lettres)</button>
+        <button type="submit" class="secondary" value="6">
+          Difficile (6 lettres)
+        </button>
+        <button type="submit" class="secondary" value="7">
+          Très difficle (7 lettres)
+        </button>
+      </form>
+    </dialog>
+
     <dialog id="endGame">
       <p>
         Félicitations, vous avez trouvé le mot mystère !<br />

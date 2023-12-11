@@ -120,20 +120,21 @@
     const endGameDialog = document.getElementById("endGame");
     const endGameWord = document.getElementById("endGameWord");
 
-    function endGame(wordToGuess, triesCount) {
+    function endGame(wordToGuess, triesCount, totalOfLetters) {
       endGameWord.innerHTML = wordToGuess;
       endGameWord.href =
         "https://dictionnaire.lerobert.com/definition/" + wordToGuess;
 
       document.getElementById("triesCount").innerHTML = triesCount;
+
+      endGameDialog.onclose = () => {
+        resetCustomError();
+        resetAlphabet();
+        startGame(totalOfLetters);
+      };
+
       endGameDialog.showModal();
     }
-
-    endGameDialog.onclose = () => {
-      resetCustomError();
-      resetAlphabet();
-      startGame(5);
-    };
 
     function wrongWord() {
       formGame.elements.answer.setCustomValidity(
@@ -175,6 +176,7 @@
         const commonLetters = countCommonLetters(answer, wordToGuess);
 
         const newTry = document.createElement("li");
+        newTry.className = "word";
         newTry.innerHTML =
           answer
             .split("")
@@ -197,7 +199,7 @@
         tries++;
 
         if (answer === wordToGuess) {
-          endGame(wordToGuess, tries);
+          endGame(wordToGuess, tries, totalOfLetters);
         } else if (!allWordWithThisNumberOfLetters.includes(answer)) {
           try {
             showLoader();
@@ -244,7 +246,11 @@
       };
     }
 
-    startGame(5);
+    explanations.onclose = () => {
+      startGame(Number(explanations.returnValue));
+    };
+
+    explanations.showModal();
 
     hideLoader();
   } catch (error) {
