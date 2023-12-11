@@ -98,6 +98,14 @@
         flex-direction: column;
       }
 
+      .alphabet-hint {
+        margin: 20px auto 0;
+        font-size: 1rem;
+        color: rgba(0, 0, 0, 0.8);
+        padding: 10px;
+        border: 1px solid #000;
+      }
+
       #word-list {
         width: 100%;
         margin: 20px 0;
@@ -203,6 +211,35 @@
         background-color: rgb(194, 255, 194);
       }
 
+      [data-a="1"] input[data-letter="a"]:hover,
+      [data-b="1"] input[data-letter="b"]:hover,
+      [data-c="1"] input[data-letter="c"]:hover,
+      [data-d="1"] input[data-letter="d"]:hover,
+      [data-e="1"] input[data-letter="e"]:hover,
+      [data-f="1"] input[data-letter="f"]:hover,
+      [data-g="1"] input[data-letter="g"]:hover,
+      [data-h="1"] input[data-letter="h"]:hover,
+      [data-i="1"] input[data-letter="i"]:hover,
+      [data-j="1"] input[data-letter="j"]:hover,
+      [data-k="1"] input[data-letter="k"]:hover,
+      [data-l="1"] input[data-letter="l"]:hover,
+      [data-m="1"] input[data-letter="m"]:hover,
+      [data-n="1"] input[data-letter="n"]:hover,
+      [data-o="1"] input[data-letter="o"]:hover,
+      [data-p="1"] input[data-letter="p"]:hover,
+      [data-q="1"] input[data-letter="q"]:hover,
+      [data-r="1"] input[data-letter="r"]:hover,
+      [data-s="1"] input[data-letter="s"]:hover,
+      [data-t="1"] input[data-letter="t"]:hover,
+      [data-u="1"] input[data-letter="u"]:hover,
+      [data-v="1"] input[data-letter="v"]:hover,
+      [data-w="1"] input[data-letter="w"]:hover,
+      [data-x="1"] input[data-letter="x"]:hover,
+      [data-y="1"] input[data-letter="y"]:hover,
+      [data-z="1"] input[data-letter="z"]:hover {
+        background-color: rgb(158, 209, 158);
+      }
+
       [data-a="0"] [data-letter="a"],
       [data-b="0"] [data-letter="b"],
       [data-c="0"] [data-letter="c"],
@@ -231,6 +268,35 @@
       [data-z="0"] [data-letter="z"] {
         text-decoration: underline;
         background-color: rgb(255, 188, 188);
+      }
+
+      [data-a="0"] input[data-letter="a"]:hover,
+      [data-b="0"] input[data-letter="b"]:hover,
+      [data-c="0"] input[data-letter="c"]:hover,
+      [data-d="0"] input[data-letter="d"]:hover,
+      [data-e="0"] input[data-letter="e"]:hover,
+      [data-f="0"] input[data-letter="f"]:hover,
+      [data-g="0"] input[data-letter="g"]:hover,
+      [data-h="0"] input[data-letter="h"]:hover,
+      [data-i="0"] input[data-letter="i"]:hover,
+      [data-j="0"] input[data-letter="j"]:hover,
+      [data-k="0"] input[data-letter="k"]:hover,
+      [data-l="0"] input[data-letter="l"]:hover,
+      [data-m="0"] input[data-letter="m"]:hover,
+      [data-n="0"] input[data-letter="n"]:hover,
+      [data-o="0"] input[data-letter="o"]:hover,
+      [data-p="0"] input[data-letter="p"]:hover,
+      [data-q="0"] input[data-letter="q"]:hover,
+      [data-r="0"] input[data-letter="r"]:hover,
+      [data-s="0"] input[data-letter="s"]:hover,
+      [data-t="0"] input[data-letter="t"]:hover,
+      [data-u="0"] input[data-letter="u"]:hover,
+      [data-v="0"] input[data-letter="v"]:hover,
+      [data-w="0"] input[data-letter="w"]:hover,
+      [data-x="0"] input[data-letter="x"]:hover,
+      [data-y="0"] input[data-letter="y"]:hover,
+      [data-z="0"] input[data-letter="z"]:hover {
+        background-color: rgb(224, 169, 169);
       }
 
       #loader-container {
@@ -369,7 +435,7 @@
 
     <dialog id="endGame">
       <p>
-        Félicitations, vous avez trouvé le mot mystère !<br />
+        Félicitations, vous avez trouvé le mot-mystère !<br />
         Il s'agissait bien de <a id="endGameWord" target="_blank"></a>.<br />
         Vous l'avez trouvé en <strong id="triesCount"></strong> coups !
       </p>
@@ -402,6 +468,7 @@
 
     <section class="bottom-container">
       <ol id="word-list" reversed></ol>
+
       <div id="alphabet-container" class="alphabet">
         <input type="button" data-letter="a" value="A" />
         <input type="button" data-letter="b" value="B" />
@@ -431,6 +498,18 @@
         <input type="button" data-letter="z" value="Z" />
       </div>
       <button id="reset" type="button">Réinitialiser les lettres</button>
+
+      <p class="alphabet-hint">
+        <strong
+          >Utilisez les lettres ci-dessus pour vous aider à investiguer
+          !</strong
+        ><br />
+        Cliquez une fois sur une lettre pour indiquer que vous pensez qu'elle
+        n'est pas dans le mot-mystère.<br />
+        Cliquez une seconde fois pour indiquer que vous pensez qu'elle se trouve
+        dans le mot-mystère.<br />
+        Cliquez une troisième fois pour remettre la lettre à 0.<br />
+      </p>
     </section>
 
     <div id="loader-container">
