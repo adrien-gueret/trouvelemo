@@ -117,6 +117,24 @@
     formGame.elements.answer.onkeydown = resetCustomError;
     formGame.elements.answer.onchange = resetCustomError;
 
+    const endGameDialog = document.getElementById("endGame");
+    const endGameWord = document.getElementById("endGameWord");
+
+    function endGame(wordToGuess, triesCount) {
+      endGameWord.innerHTML = wordToGuess;
+      endGameWord.href =
+        "https://dictionnaire.lerobert.com/definition/" + wordToGuess;
+
+      document.getElementById("triesCount").innerHTML = triesCount;
+      endGameDialog.showModal();
+    }
+
+    endGameDialog.onclose = () => {
+      resetCustomError();
+      resetAlphabet();
+      startGame(5);
+    };
+
     function wrongWord() {
       formGame.elements.answer.setCustomValidity(
         "Ce mot ne semble pas exister dans la langue française."
@@ -134,7 +152,14 @@
       formGame.elements.answer.reportValidity();
     }
 
+    let tries = 0;
     function startGame(totalOfLetters) {
+      tries = 0;
+
+      wordList.innerHTML = "";
+      formGame.elements.answer.value = "";
+      formGame.elements.answer.focus();
+
       const allWordWithThisNumberOfLetters = allWords.filter(
         (w) => w.length === totalOfLetters
       );
@@ -169,8 +194,10 @@
       }
 
       async function guess(answer) {
+        tries++;
+
         if (answer === wordToGuess) {
-          alert("C'est gagné !");
+          endGame(wordToGuess, tries);
         } else if (!allWordWithThisNumberOfLetters.includes(answer)) {
           try {
             showLoader();
