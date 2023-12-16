@@ -110,8 +110,12 @@
 
     const formGame = document.forms.game;
 
-    function resetCustomError() {
+    function resetCustomError(e) {
       formGame.elements.answer.setCustomValidity("");
+
+      if (e?.key === " ") {
+        e.preventDefault();
+      }
     }
 
     formGame.elements.answer.onkeydown = resetCustomError;
